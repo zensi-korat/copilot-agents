@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Card from "../components/Card";
-import Button from "../components/Button";
+import { Card, Button } from "../components/ui";
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const UiButton = Button as any;
 import { Edit2, Trash2, Plus } from "lucide-react";
 
 type Report = {
@@ -66,18 +67,18 @@ export default function Reports() {
     }
   }, [reports]);
 
-  const nextId = Math.max(0, ...reports.map((r) => r.id)) + 1;
+  // nextId reserved for future use
 
   return (
     <div className="p-8">
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Reports</h1>
-          <p className="text-gray-600">Manage healthcare reports and results</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Reports</h1>
+          <p className="text-muted">Manage healthcare reports and results</p>
         </div>
-        <Button variant="primary" onClick={() => navigate("/add-report")}>
+        <UiButton variant="default" onClick={() => navigate("/add-report")}>
           <Plus size={20} /> Add Report
-        </Button>
+        </UiButton>
       </div>
 
       <Card>
@@ -85,19 +86,19 @@ export default function Reports() {
           <table className="w-full">
             <thead>
               <tr className="border-b">
-                <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                <th className="text-left py-3 px-4 font-semibold text-foreground">
                   Patient
                 </th>
-                <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                <th className="text-left py-3 px-4 font-semibold text-foreground">
                   Report Type
                 </th>
-                <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                <th className="text-left py-3 px-4 font-semibold text-foreground">
                   Date
                 </th>
-                <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                <th className="text-left py-3 px-4 font-semibold text-foreground">
                   Status
                 </th>
-                <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                <th className="text-left py-3 px-4 font-semibold text-foreground">
                   Actions
                 </th>
               </tr>
@@ -106,31 +107,31 @@ export default function Reports() {
               {reports.map((report) => (
                 <tr
                   key={report.id}
-                  className="border-b hover:bg-gray-50 transition"
+                  className="border-b border-border hover:bg-background transition"
                 >
-                  <td className="py-3 px-4 text-gray-900">
+                  <td className="py-3 px-4 text-foreground">
                     {report.patientName}
                   </td>
-                  <td className="py-3 px-4 text-gray-600">
+                  <td className="py-3 px-4 text-muted">
                     {report.reportType}
                   </td>
-                  <td className="py-3 px-4 text-gray-600">
+                  <td className="py-3 px-4 text-muted">
                     {new Date(report.date).toLocaleDateString()}
                   </td>
                   <td className="py-3 px-4">
                     <span
-                      className={`px-3 py-1 rounded-full text-sm ${report.status === "Completed" ? "bg-green-100 text-green-700" : report.status === "Pending" ? "bg-yellow-100 text-yellow-700" : "bg-blue-100 text-blue-700"}`}
+                      className={`px-3 py-1 rounded-full text-sm ${report.status === "Completed" ? "bg-success/10 text-success" : report.status === "Pending" ? "bg-warning/10 text-warning" : "bg-accent/10 text-accent"}`}
                     >
                       {report.status}
                     </span>
                   </td>
                   <td className="py-3 px-4">
                     <div className="flex gap-2">
-                      <button className="p-2 hover:bg-gray-100 rounded transition">
-                        <Edit2 size={18} className="text-gray-600" />
+                      <button className="p-2 hover:bg-background rounded transition">
+                        <Edit2 size={18} className="text-muted" />
                       </button>
                       <button
-                        className="p-2 hover:bg-gray-100 rounded transition"
+                        className="p-2 hover:bg-background rounded transition"
                         onClick={() =>
                           setReports((prev) =>
                             prev.filter((r) => r.id !== report.id),
@@ -138,7 +139,7 @@ export default function Reports() {
                         }
                         title="Delete report"
                       >
-                        <Trash2 size={18} className="text-red-600" />
+                        <Trash2 size={18} className="text-destructive" />
                       </button>
                     </div>
                   </td>
@@ -148,7 +149,7 @@ export default function Reports() {
               {reports.length === 0 && (
                 <tr>
                   <td
-                    className="py-6 px-4 text-center text-gray-500"
+                    className="py-6 px-4 text-center text-muted"
                     colSpan={5}
                   >
                     No reports found.

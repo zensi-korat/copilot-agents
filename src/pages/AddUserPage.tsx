@@ -9,8 +9,7 @@ import {
   Trash2,
   UserPlus,
 } from "lucide-react";
-import Card from "../components/Card";
-import Button from "../components/Button";
+import { Button } from "../components/ui";
 
 export type User = {
   id: number;
@@ -90,9 +89,9 @@ function FieldLabel({
   required?: boolean;
 }) {
   return (
-    <label className="block text-sm font-medium text-gray-700 mb-1">
+    <label className="block text-sm font-medium text-foreground mb-1">
       {children}
-      {required && <span className="text-red-500 ml-1">*</span>}
+      {required && <span className="text-destructive ml-1">*</span>}
     </label>
   );
 }
@@ -109,11 +108,11 @@ function TextInput(
       {label && <FieldLabel>{label}</FieldLabel>}
       <input
         {...rest}
-        className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white ${
-          error ? "border-red-300" : "border-gray-200"
+        className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-ring bg-surface ${
+          error ? "border-destructive" : "border-border"
         }`}
       />
-      {error && <p className="text-xs text-red-600 mt-1">{error}</p>}
+      {error && <p className="text-xs text-destructive mt-1">{error}</p>}
     </div>
   );
 }
@@ -130,11 +129,11 @@ function TextArea(
       {label && <FieldLabel>{label}</FieldLabel>}
       <textarea
         {...rest}
-        className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white ${
-          error ? "border-red-300" : "border-gray-200"
+        className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-ring bg-surface ${
+          error ? "border-destructive" : "border-border"
         }`}
       />
-      {error && <p className="text-xs text-red-600 mt-1">{error}</p>}
+      {error && <p className="text-xs text-destructive mt-1">{error}</p>}
     </div>
   );
 }
@@ -156,7 +155,7 @@ function Select({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+        className="w-full px-3 py-2 bg-surface border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
       >
         {options.map((o) => (
           <option key={o} value={o}>
@@ -192,7 +191,7 @@ function AvatarUploader({
     <div>
       <FieldLabel>Avatar</FieldLabel>
       <div className="flex items-center gap-4">
-        <div className="w-20 h-20 bg-gray-100 rounded-full overflow-hidden flex items-center justify-center">
+        <div className="w-20 h-20 bg-background rounded-full overflow-hidden flex items-center justify-center">
           {value ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -201,7 +200,7 @@ function AvatarUploader({
               className="w-full h-full object-cover"
             />
           ) : (
-            <div className="text-gray-400">
+            <div className="text-muted">
               <Camera size={28} />
             </div>
           )}
@@ -218,19 +217,19 @@ function AvatarUploader({
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-md flex items-center gap-2"
+              className="px-3 py-2 bg-background hover:bg-border rounded-md flex items-center gap-2"
             >
               <UploadCloud size={16} /> Upload
             </button>
             <button
               type="button"
               onClick={() => onChange(undefined)}
-              className="px-3 py-2 bg-red-50 hover:bg-red-100 text-red-700 rounded-md flex items-center gap-2"
+              className="px-3 py-2 bg-destructive/10 hover:bg-destructive/20 text-destructive rounded-md flex items-center gap-2"
             >
               <Trash2 size={16} /> Remove
             </button>
           </div>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-muted">
             Square images work best. Max ~2MB recommended.
           </p>
         </div>
@@ -269,13 +268,13 @@ function TagInput({
         {tags.map((t, i) => (
           <span
             key={t + i}
-            className="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm flex items-center gap-2"
+            className="bg-background text-foreground px-3 py-1 rounded-full text-sm flex items-center gap-2"
           >
             {t}
             <button
               type="button"
               onClick={() => removeTag(i)}
-              className="text-gray-500 hover:text-gray-700"
+              className="text-muted hover:text-foreground"
             >
               ×
             </button>
@@ -292,13 +291,13 @@ function TagInput({
               addTag();
             }
           }}
-          className="flex-1 px-3 py-2 border border-gray-200 rounded-md"
+          className="flex-1 px-3 py-2 border border-border rounded-md"
           placeholder="Press Enter to add tag"
         />
         <button
           type="button"
           onClick={() => addTag()}
-          className="px-3 py-2 bg-primary-600 text-white rounded-md"
+          className="px-3 py-2 bg-primary text-primary-foreground rounded-md"
         >
           Add
         </button>
@@ -330,7 +329,7 @@ function PermissionsMatrix({
               checked={permissions.includes(p)}
               onChange={() => toggle(p)}
             />
-            <span className="text-sm text-gray-700">{p}</span>
+            <span className="text-sm text-foreground">{p}</span>
           </label>
         ))}
       </div>
@@ -508,10 +507,10 @@ export default function AddUserPage() {
     <div className="p-8">
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900 flex items-center gap-3">
+          <h1 className="text-2xl font-semibold text-foreground flex items-center gap-3">
             <UserPlus size={20} /> Add New User
           </h1>
-          <p className="text-sm text-gray-600 mt-1">
+          <p className="text-sm text-muted mt-1">
             Create a user and return to the users list.
           </p>
         </div>
@@ -613,7 +612,7 @@ export default function AddUserPage() {
                         setPermissions([defaultPermissions[0]]);
                         setBio("This is a demo user created for testing.");
                       }}
-                      className="px-3 py-2 bg-gray-100 rounded-md flex items-center gap-2"
+                      className="px-3 py-2 bg-background rounded-md flex items-center gap-2"
                     >
                       <FileText size={16} /> Fill Demo
                     </button>
@@ -624,7 +623,7 @@ export default function AddUserPage() {
                           "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><rect width='100%' height='100%' fill='%23e5e7eb'/><text x='50%' y='50%' font-size='18' text-anchor='middle' fill='%23737474' dy='.3em'>avatar</text></svg>",
                         )
                       }
-                      className="px-3 py-2 bg-gray-100 rounded-md flex items-center gap-2"
+                      className="px-3 py-2 bg-background rounded-md flex items-center gap-2"
                     >
                       <Camera size={16} /> Quick Avatar
                     </button>
@@ -639,13 +638,13 @@ export default function AddUserPage() {
           </div>
 
           <div className="lg:col-span-1 space-y-4">
-            <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm">
+            <div className="bg-surface border border-border rounded-lg p-4 shadow-sm">
               <div className="flex items-center justify-between">
                 <h4 className="font-medium">Permissions</h4>
                 <button
                   type="button"
                   onClick={() => setPermissions(defaultPermissions.slice())}
-                  className="text-sm text-primary-600"
+                  className="text-sm text-primary"
                 >
                   Select All
                 </button>
@@ -658,9 +657,9 @@ export default function AddUserPage() {
               </div>
             </div>
 
-            <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm">
+            <div className="bg-surface border border-border rounded-lg p-4 shadow-sm">
               <h4 className="font-medium">Import / Bulk Add</h4>
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-sm text-muted mt-1">
                 Import from CSV or add sample users for testing.
               </p>
               <div className="mt-3 flex flex-col gap-2">
@@ -677,7 +676,7 @@ export default function AddUserPage() {
                   <button
                     type="button"
                     onClick={() => fileImportRef.current?.click()}
-                    className="px-3 py-2 bg-gray-100 rounded-md flex items-center gap-2"
+                    className="px-3 py-2 bg-background rounded-md flex items-center gap-2"
                   >
                     <FileText size={16} /> Import CSV
                   </button>
@@ -704,7 +703,7 @@ export default function AddUserPage() {
                       }
                       navigate("/users");
                     }}
-                    className="px-3 py-2 bg-gray-100 rounded-md flex items-center gap-2"
+                    className="px-3 py-2 bg-background rounded-md flex items-center gap-2"
                   >
                     <PlusCircle size={16} /> Bulk Add 3
                   </button>
@@ -712,10 +711,10 @@ export default function AddUserPage() {
               </div>
             </div>
 
-            <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm">
+            <div className="bg-card border border-border rounded-lg p-4 shadow-sm">
               <h4 className="font-medium">Metadata</h4>
-              <p className="text-sm text-gray-500 mt-1">Created: --</p>
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-sm text-muted mt-1">Created: --</p>
+              <p className="text-sm text-muted mt-1">
                 Local persistence key: {LOCAL_STORAGE_KEY}
               </p>
             </div>
@@ -723,7 +722,7 @@ export default function AddUserPage() {
         </div>
 
         {errorMap.form && (
-          <p className="text-sm text-red-600">{errorMap.form}</p>
+          <p className="text-sm text-destructive">{errorMap.form}</p>
         )}
 
         <div className="flex items-center justify-end gap-3">
@@ -733,7 +732,7 @@ export default function AddUserPage() {
           <button
             type="button"
             onClick={handleSaveAddAnother}
-            className="px-4 py-2 bg-gray-200 rounded-md"
+            className="px-4 py-2 bg-border rounded-md"
           >
             Save & Add Another
           </button>
@@ -741,7 +740,7 @@ export default function AddUserPage() {
             type="button"
             onClick={handleSubmit}
             disabled={saving}
-            className="px-4 py-2 bg-primary-600 text-white rounded-md flex items-center gap-2"
+            className="px-4 py-2 bg-primary text-primary-foreground rounded-md flex items-center gap-2"
           >
             {saving ? (
               <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">

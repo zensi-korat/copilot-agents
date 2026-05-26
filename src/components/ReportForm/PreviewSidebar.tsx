@@ -24,9 +24,9 @@ export default function PreviewSidebar({ form }: PreviewSidebarProps) {
   return (
     <div className="col-span-12 lg:col-span-4">
       <div className="sticky top-6 space-y-4">
-        <div className="border rounded p-4 bg-gray-50">
+        <div className="border border-border rounded p-4 bg-background">
           <h3 className="font-semibold mb-2">Preview</h3>
-          <div className="text-sm text-gray-700">
+          <div className="text-sm text-foreground">
             <div className="mb-2">
               <strong>Patient:</strong> {form.patientName || "—"}
             </div>
@@ -48,9 +48,9 @@ export default function PreviewSidebar({ form }: PreviewSidebarProps) {
           </div>
         </div>
 
-        <div className="border rounded p-4">
+        <div className="border border-border rounded p-4">
           <h3 className="font-semibold mb-2">Summary</h3>
-          <div className="text-sm text-gray-700 space-y-2">
+          <div className="text-sm text-foreground space-y-2">
             <div>
               <strong>Patient ID:</strong> {form.patientId || "—"}
             </div>
@@ -66,21 +66,21 @@ export default function PreviewSidebar({ form }: PreviewSidebarProps) {
           </div>
         </div>
 
-        <div className="border rounded p-4 bg-white">
+        <div className="border border-border rounded p-4 bg-surface">
           <h3 className="font-semibold mb-2">
             Tests ({(form.tests || []).length})
           </h3>
-          <div className="space-y-2 text-sm text-gray-700">
+          <div className="space-y-2 text-sm text-foreground">
             {(form.tests || []).slice(0, 6).map((t) => (
               <div key={t.id} className="flex justify-between">
                 <div>{t.name || "—"}</div>
-                <div className="text-gray-500">
+                <div className="text-muted">
                   {t.value || ""} {t.unit || ""}
                 </div>
               </div>
             ))}
             {(form.tests || []).length > 6 && (
-              <div className="text-xs text-gray-500">
+              <div className="text-xs text-muted">
                 Showing 6 of {form.tests.length}
               </div>
             )}

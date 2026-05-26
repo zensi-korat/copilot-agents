@@ -1,113 +1,99 @@
-# Admin Panel - React + Tailwind CSS
+# Admin Panel — React + Tailwind CSS (Finio API integration)
 
 A modern, responsive admin panel built with React, TypeScript, Vite, and Tailwind CSS.
 
+This workspace includes an integration with the Finio API for personal finance features (accounts, transactions, categories, labels) plus authentication (email + OTP flows), protected routes, and automatic remote backups.
+
+## Highlights
+
+- Finio API integration via a small API client (`/api` base path with Vite proxy)
+- Authentication: register, login, OTP verification, forgot/reset password
+- Protected routes using `AuthContext` + `ProtectedRoute`
+- Finance domain: accounts, transactions, categories, labels, and settings
+- Auto-backup: local finance state syncs to remote backups with debounce
+- Dev proxy to avoid CORS: Vite proxies `/api` to the Finio API in development
+- TypeScript, Tailwind CSS, and Vite for a fast DX
+
 ## Features
 
-- 🎨 **Modern UI**: Built with Tailwind CSS for a clean, professional design
-- 📱 **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
-- ⚡ **Fast Build**: Powered by Vite for lightning-fast development and builds
-- 🧩 **Reusable Components**: Pre-built UI components like Cards, Buttons, and StatCards
-- 🛣️ **Routing**: React Router for multi-page navigation
-- 📊 **Dashboard**: Sample dashboard with stats, charts, and activity feeds
-- 👥 **User Management**: Demo users table with CRUD operations
-- ⚙️ **Settings Page**: Settings management with sections and forms
-- 🎯 **TypeScript**: Full type safety for better development experience
+- Modern UI with Tailwind CSS and reusable components
+- Authentication & session management (token persisted in localStorage)
+- Route protection (redirects to `/login` when unauthenticated)
+- Finance CRUD (accounts, transactions) and category/label management
+- Automatic backups to remote API and manual sync
+- Admin pages: Dashboard, Users, Reports, Settings, Profile
 
-## Project Structure
+## Project structure (high level)
 
 ```
 src/
-├── components/        # Reusable UI components
-│   ├── Header.tsx
-│   ├── Sidebar.tsx
-│   ├── Card.tsx
-│   ├── StatCard.tsx
-│   └── Button.tsx
-├── pages/            # Page components
-│   ├── Dashboard.tsx
-│   ├── Users.tsx
-│   └── Settings.tsx
-├── layouts/          # Layout components
-│   └── AdminLayout.tsx
-├── App.tsx           # Main app component
-├── main.tsx          # Entry point
-└── index.css         # Global styles
+├── components/        # Reusable UI: Header, Sidebar, ProtectedRoute, etc.
+├── pages/             # Pages: dashboard, auth, finance pages, users, settings
+├── layouts/           # Admin layout wiring header + sidebar
+├── context/           # React contexts: AuthContext, FinanceContext
+├── services/          # API wrappers: auth.ts, user.ts, backup.ts
+├── utils/             # apiClient.ts, token helpers
+├── types/             # shared TypeScript types (finance models)
+├── App.tsx            # Routing + protected route wiring
+└── main.tsx           # App bootstrap (providers)
 ```
 
-## Getting Started
+## Key files
+
+- [src/utils/apiClient.ts](src/utils/apiClient.ts) — request wrapper; uses `/api` base for the Vite proxy and attaches the auth token when needed.
+- [src/utils/token.ts](src/utils/token.ts) — token get/set/remove helpers (localStorage).
+- [src/services/auth.ts](src/services/auth.ts) — register/login/verify/resend/forgot/reset endpoints.
+- [src/services/backup.ts](src/services/backup.ts) — upload & fetch backups.
+- [src/context/AuthContext.tsx](src/context/AuthContext.tsx) — `AuthProvider`, `useAuth()` and `logout()`.
+- [src/context/FinanceContext.tsx](src/context/FinanceContext.tsx) — local finance state, CRUD, and auto-backup syncing.
+- [src/components/ProtectedRoute.tsx](src/components/ProtectedRoute.tsx) — restricts routes to authenticated users.
+- [src/components/Header.tsx](src/components/Header.tsx) — logout button now clears finance state and redirects to `/login`.
+- [vite.config.ts](vite.config.ts) — contains the dev proxy mapping `/api` to the Finio API host.
+- [tsconfig.app.json](tsconfig.app.json) — JSX configured (`react-jsx`) to fix editor errors.
+
+## Getting started
 
 ### Prerequisites
 
-- Node.js 16+
+- Node.js 16+ (or compatible LTS)
 - npm or yarn
 
-### Installation
-
-1. Install dependencies:
+### Install
 
 ```bash
 npm install
 ```
 
-2. Start the development server:
+### Run (development)
 
 ```bash
 npm run dev
 ```
 
-The application will open automatically at http://localhost:3000
+The Vite dev server will start and proxy requests to `/api` to the configured remote API to avoid CORS during development.
 
-### Build for Production
+### Build
 
 ```bash
 npm run build
 ```
 
-### Preview Production Build
+### Preview (production build)
 
 ```bash
 npm run preview
 ```
 
-## Technologies Used
+## Developer notes
 
-- **React 18**: UI library
-- **TypeScript**: Type-safe JavaScript
-- **Vite**: Next-generation build tool
-- **Tailwind CSS**: Utility-first CSS framework
-- **React Router**: Client-side routing
-- **Lucide React**: Beautiful icons
+- Authentication: tokens are saved with `setToken()` and read by `apiClient.request()` when `auth: true` is passed. See `src/services/auth.ts` and `src/utils/token.ts`.
+- Protected routes: `ProtectedRoute` checks `useAuth().isAuthenticated` and redirects to `/login` when false. Auth pages redirect to `/` when a user is already authenticated.
+- Finance data: `FinanceContext` exposes CRUD helpers (`addAccount`, `addTransaction`, etc.) and automatically uploads a backup after a short debounce. The header's logout clears finance state before calling `logout()`.
+- API host: change the Vite proxy in `vite.config.ts` or update the base path inside `src/utils/apiClient.ts` if you prefer a different setup.
 
-## Customization
+## Contributing
 
-### Colors
-
-Modify `tailwind.config.js` to customize the color scheme:
-
-```javascript
-theme: {
-  extend: {
-    colors: {
-      primary: {
-        /* your colors */
-      }
-    }
-  }
-}
-```
-
-### Components
-
-All components are located in `src/components/` and can be easily modified or extended.
-
-### Pages
-
-Add new pages in `src/pages/` and add routes in `src/App.tsx`:
-
-```typescript
-<Route path="/new-page" element={<NewPage />} />
-```
+If you want to extend the project, add routes under `src/pages/` and wire them into `src/App.tsx` inside the protected admin routes if they require authentication.
 
 ## License
 

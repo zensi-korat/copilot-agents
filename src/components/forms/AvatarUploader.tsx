@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { UploadCloud, Trash2, Camera } from "lucide-react";
 import { FieldLabel } from "./FieldLabel";
 import { readFileAsDataURL } from "../../utils/form-utils";
+import { Button } from "../ui";
 
 interface AvatarUploaderProps {
   value?: string;
@@ -29,7 +30,7 @@ export function AvatarUploader({ value, onChange }: AvatarUploaderProps) {
     <div>
       <FieldLabel>Avatar</FieldLabel>
       <div className="flex items-center gap-4">
-        <div className="w-20 h-20 bg-gray-100 rounded-full overflow-hidden flex items-center justify-center">
+        <div className="w-20 h-20 bg-background rounded-full overflow-hidden flex items-center justify-center">
           {value ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -38,7 +39,7 @@ export function AvatarUploader({ value, onChange }: AvatarUploaderProps) {
               className="w-full h-full object-cover"
             />
           ) : (
-            <div className="text-gray-400">
+            <div className="text-muted">
               <Camera size={28} />
             </div>
           )}
@@ -52,22 +53,24 @@ export function AvatarUploader({ value, onChange }: AvatarUploaderProps) {
             className="hidden"
           />
           <div className="flex gap-2">
-            <button
+            <Button
               type="button"
+              variant="secondary"
               onClick={() => fileInputRef.current?.click()}
-              className="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-md flex items-center gap-2"
             >
-              <UploadCloud size={16} /> Upload
-            </button>
-            <button
+              <UploadCloud size={16} />
+              <span className="ml-2">Upload</span>
+            </Button>
+            <Button
               type="button"
+              variant="destructive"
               onClick={() => onChange(undefined)}
-              className="px-3 py-2 bg-red-50 hover:bg-red-100 text-red-700 rounded-md flex items-center gap-2"
             >
-              <Trash2 size={16} /> Remove
-            </button>
+              <Trash2 size={16} />
+              <span className="ml-2">Remove</span>
+            </Button>
           </div>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-muted">
             Square images work best. Max ~2MB recommended.
           </p>
         </div>

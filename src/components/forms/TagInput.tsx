@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FieldLabel } from "./FieldLabel";
+import { Input, Button } from "../ui";
 
 interface TagInputProps {
   tags: string[];
@@ -36,13 +37,13 @@ export function TagInput({ tags, onChange }: TagInputProps) {
         {tags.map((t, i) => (
           <span
             key={t + i}
-            className="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm flex items-center gap-2"
+            className="bg-background text-foreground px-3 py-1 rounded-full text-sm flex items-center gap-2"
           >
             {t}
             <button
               type="button"
               onClick={() => removeTag(i)}
-              className="text-gray-500 hover:text-gray-700"
+              className="text-muted hover:text-foreground"
             >
               ×
             </button>
@@ -50,25 +51,19 @@ export function TagInput({ tags, onChange }: TagInputProps) {
         ))}
       </div>
       <div className="flex gap-2">
-        <input
+        <Input
           value={text}
-          onChange={(e) => setText(e.target.value)}
-          onKeyDown={(e) => {
+          onChange={(e: any) => setText(e.target.value)}
+          onKeyDown={(e: any) => {
             if (e.key === "Enter") {
               e.preventDefault();
               addTag();
             }
           }}
-          className="flex-1 px-3 py-2 border border-gray-200 rounded-md"
+          className="flex-1"
           placeholder="Press Enter to add tag"
         />
-        <button
-          type="button"
-          onClick={() => addTag()}
-          className="px-3 py-2 bg-primary-600 text-white rounded-md"
-        >
-          Add
-        </button>
+        <Button onClick={() => addTag()}>Add</Button>
       </div>
     </div>
   );

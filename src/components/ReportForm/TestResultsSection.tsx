@@ -1,5 +1,6 @@
 import React from "react";
-import Button from "../Button";
+import { Button } from "../ui";
+const UiButton = Button as any;
 import { Plus, Trash2 } from "lucide-react";
 import { Report } from "../../hooks/useReportForm";
 
@@ -73,18 +74,18 @@ export default function TestResultsSection({
             <div className="col-span-12 md:col-span-1 flex justify-end">
               <button
                 onClick={() => onRemoveTest(t.id)}
-                className="p-2 hover:bg-gray-100 rounded"
+                className="p-2 hover:bg-background rounded"
               >
-                <Trash2 size={16} className="text-red-600" />
+                <Trash2 size={16} className="text-destructive" />
               </button>
             </div>
           </div>
         ))}
 
         <div className="pt-2">
-          <Button variant="secondary" onClick={onAddTest}>
+          <UiButton variant="secondary" onClick={onAddTest}>
             <Plus size={16} /> Add Test
-          </Button>
+          </UiButton>
         </div>
       </div>
     </section>

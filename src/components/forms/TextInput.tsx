@@ -1,8 +1,8 @@
 import React from "react";
-import { FieldLabel } from "./FieldLabel";
+import { Input } from "../ui";
 
 /**
- * TextInput - Reusable text input component with label and error display
+ * TextInput - Reusable text input component with label and error display (wrapped UI input)
  */
 export function TextInput(
   props: React.InputHTMLAttributes<HTMLInputElement> & {
@@ -11,16 +11,5 @@ export function TextInput(
   },
 ) {
   const { label, error, ...rest } = props;
-  return (
-    <div>
-      {label && <FieldLabel>{label}</FieldLabel>}
-      <input
-        {...rest}
-        className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white ${
-          error ? "border-red-300" : "border-gray-200"
-        }`}
-      />
-      {error && <p className="text-xs text-red-600 mt-1">{error}</p>}
-    </div>
-  );
+  return <Input {...(rest as any)} label={label} error={error} />;
 }

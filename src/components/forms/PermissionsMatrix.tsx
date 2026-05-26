@@ -33,7 +33,7 @@ export function PermissionsMatrix({
               checked={permissions.includes(p)}
               onChange={() => toggle(p)}
             />
-            <span className="text-sm text-gray-700">{p}</span>
+            <span className="text-sm text-foreground">{p}</span>
           </label>
         ))}
       </div>

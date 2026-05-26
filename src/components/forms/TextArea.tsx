@@ -1,8 +1,8 @@
 import React from "react";
-import { FieldLabel } from "./FieldLabel";
+import { Textarea } from "../ui";
 
 /**
- * TextArea - Reusable textarea component with label and error display
+ * TextArea - Reusable textarea component with label and error display (wrapped UI textarea)
  */
 export function TextArea(
   props: React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
@@ -11,16 +11,5 @@ export function TextArea(
   },
 ) {
   const { label, error, ...rest } = props;
-  return (
-    <div>
-      {label && <FieldLabel>{label}</FieldLabel>}
-      <textarea
-        {...rest}
-        className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white ${
-          error ? "border-red-300" : "border-gray-200"
-        }`}
-      />
-      {error && <p className="text-xs text-red-600 mt-1">{error}</p>}
-    </div>
-  );
+  return <Textarea {...(rest as any)} label={label} error={error} />;
 }

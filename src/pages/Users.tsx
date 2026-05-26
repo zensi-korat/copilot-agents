@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Card from "../components/Card";
-import Button from "../components/Button";
+import { Card, Button } from "../components/ui";
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const UiButton = Button as any;
 import { Edit2, Trash2, Plus } from "lucide-react";
 import { type User as AddUserType } from "./AddUserPage";
 
@@ -59,27 +60,20 @@ export default function Users() {
     }
   }, [users]);
 
-  function handleAddUser(user: AddUserType) {
-    setUsers((prev) => [user, ...prev]);
-    setIsAddOpen(false);
-  }
-
-  const nextId = Math.max(0, ...users.map((u) => u.id)) + 1;
+  // Local users state is persisted to localStorage; add-user page lives at /add-user
 
   return (
     <div className="p-8">
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl font-bold text-foreground mb-2">
             Users Management
           </h1>
-          <p className="text-gray-600">
-            Manage your system users and permissions
-          </p>
+          <p className="text-muted">Manage your system users and permissions</p>
         </div>
-        <Button variant="primary" onClick={() => navigate("/add-user")}>
+        <UiButton variant="default" onClick={() => navigate("/add-user")}>
           <Plus size={20} /> Add User
-        </Button>
+        </UiButton>
       </div>
 
       <Card>
@@ -87,19 +81,19 @@ export default function Users() {
           <table className="w-full">
             <thead>
               <tr className="border-b">
-                <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                <th className="text-left py-3 px-4 font-semibold text-foreground">
                   Name
                 </th>
-                <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                <th className="text-left py-3 px-4 font-semibold text-foreground">
                   Email
                 </th>
-                <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                <th className="text-left py-3 px-4 font-semibold text-foreground">
                   Role
                 </th>
-                <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                <th className="text-left py-3 px-4 font-semibold text-foreground">
                   Status
                 </th>
-                <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                <th className="text-left py-3 px-4 font-semibold text-foreground">
                   Actions
                 </th>
               </tr>
@@ -108,29 +102,29 @@ export default function Users() {
               {users.map((user) => (
                 <tr
                   key={user.id}
-                  className="border-b hover:bg-gray-50 transition"
+                  className="border-b hover:bg-background transition"
                 >
-                  <td className="py-3 px-4 text-gray-900">{user.name}</td>
-                  <td className="py-3 px-4 text-gray-600">{user.email}</td>
+                  <td className="py-3 px-4 text-foreground">{user.name}</td>
+                  <td className="py-3 px-4 text-muted">{user.email}</td>
                   <td className="py-3 px-4">
-                    <span className="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm">
+                    <span className="px-3 py-1 bg-accent/10 text-accent rounded-full text-sm">
                       {user.role}
                     </span>
                   </td>
                   <td className="py-3 px-4">
                     <span
-                      className={`px-3 py-1 rounded-full text-sm ${user.status === "Active" ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-700"}`}
+                      className={`px-3 py-1 rounded-full text-sm ${user.status === "Active" ? "bg-success/10 text-success" : "bg-background text-foreground"}`}
                     >
                       {user.status}
                     </span>
                   </td>
                   <td className="py-3 px-4">
                     <div className="flex gap-2">
-                      <button className="p-2 hover:bg-gray-100 rounded transition">
-                        <Edit2 size={18} className="text-gray-600" />
+                      <button className="p-2 hover:bg-background rounded transition">
+                        <Edit2 size={18} className="text-muted" />
                       </button>
                       <button
-                        className="p-2 hover:bg-gray-100 rounded transition"
+                        className="p-2 hover:bg-background rounded transition"
                         onClick={() =>
                           setUsers((prev) =>
                             prev.filter((u) => u.id !== user.id),
@@ -138,7 +132,7 @@ export default function Users() {
                         }
                         title="Delete user"
                       >
-                        <Trash2 size={18} className="text-red-600" />
+                        <Trash2 size={18} className="text-destructive" />
                       </button>
                     </div>
                   </td>

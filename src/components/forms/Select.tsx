@@ -1,5 +1,5 @@
 import React from "react";
-import { FieldLabel } from "./FieldLabel";
+import { Select as UISelect } from "../ui";
 
 interface SelectProps {
   label?: string;
@@ -9,23 +9,20 @@ interface SelectProps {
 }
 
 /**
- * Select - Reusable select component with label
+ * Select - Reusable select component with label (wrapped UI select)
  */
 export function Select({ label, value, onChange, options }: SelectProps) {
   return (
-    <div>
-      {label && <FieldLabel>{label}</FieldLabel>}
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
-      >
-        {options.map((o) => (
-          <option key={o} value={o}>
-            {o}
-          </option>
-        ))}
-      </select>
-    </div>
+    <UISelect
+      label={label}
+      value={value}
+      onChange={(e: any) => onChange(e.target.value)}
+    >
+      {options.map((o) => (
+        <option key={o} value={o}>
+          {o}
+        </option>
+      ))}
+    </UISelect>
   );
 }

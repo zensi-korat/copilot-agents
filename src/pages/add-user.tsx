@@ -303,7 +303,7 @@ export default function AddUserModal({
                       setPermissions([DEFAULT_PERMISSIONS[0]]);
                       setBio("This is a demo user created for testing.");
                     }}
-                    className="px-3 py-2 bg-gray-100 rounded-md text-sm"
+                    className="px-3 py-2 bg-background rounded-md text-sm"
                   >
                     <FileText size={14} /> Fill Demo
                   </button>
@@ -314,7 +314,7 @@ export default function AddUserModal({
                         "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><rect width='100%' height='100%' fill='%23e5e7eb'/><text x='50%' y='50%' font-size='18' text-anchor='middle' fill='%23737474' dy='.3em'>avatar</text></svg>",
                       )
                     }
-                    className="px-3 py-2 bg-gray-100 rounded-md text-sm"
+                    className="px-3 py-2 bg-background rounded-md text-sm"
                   >
                     Quick Avatar
                   </button>
@@ -333,7 +333,7 @@ export default function AddUserModal({
                 <button
                   type="button"
                   onClick={() => setPermissions(DEFAULT_PERMISSIONS.slice())}
-                  className="text-sm text-primary-600"
+                  className="text-sm text-primary"
                 >
                   Select All
                 </button>
@@ -348,7 +348,7 @@ export default function AddUserModal({
 
             <FormCard>
               <h4 className="font-medium">Import / Bulk Add</h4>
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-sm text-muted mt-1">
                 Import from CSV or add sample users for testing.
               </p>
               <div className="mt-3 flex flex-col gap-2">
@@ -362,7 +362,7 @@ export default function AddUserModal({
                 <button
                   type="button"
                   onClick={() => fileImportRef.current?.click()}
-                  className="px-3 py-2 bg-gray-100 rounded-md text-sm"
+                  className="px-3 py-2 bg-background rounded-md text-sm"
                 >
                   <FileText size={14} /> Import CSV
                 </button>
@@ -379,7 +379,7 @@ export default function AddUserModal({
                       persistUser(demo);
                     }
                   }}
-                  className="px-3 py-2 bg-gray-100 rounded-md text-sm"
+                  className="px-3 py-2 bg-background rounded-md text-sm"
                 >
                   <PlusCircle size={14} /> Bulk Add 3
                 </button>
@@ -389,28 +389,28 @@ export default function AddUserModal({
         </div>
 
         {errorMap.form && (
-          <p className="text-sm text-red-600">{errorMap.form}</p>
+          <p className="text-sm text-destructive">{errorMap.form}</p>
         )}
 
         <div className="flex items-center justify-end gap-3">
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 bg-gray-100 rounded-md"
+            className="px-4 py-2 bg-background rounded-md"
           >
             Cancel
           </button>
           <button
             type="button"
             onClick={handleSaveAddAnother}
-            className="px-4 py-2 bg-gray-200 rounded-md"
+            className="px-4 py-2 bg-border rounded-md"
           >
             Save & Add Another
           </button>
           <button
             type="submit"
             disabled={saving}
-            className="px-4 py-2 bg-primary-600 text-white rounded-md flex items-center gap-2"
+            className="px-4 py-2 bg-primary text-primary-foreground rounded-md flex items-center gap-2"
           >
             {saving ? (
               <>

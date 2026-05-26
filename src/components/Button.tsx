@@ -15,9 +15,9 @@ export default function Button({
     "font-medium rounded-lg transition-colors duration-200 flex items-center gap-2";
 
   const variantStyles = {
-    primary: "bg-primary-600 hover:bg-primary-700 text-white",
-    secondary: "bg-gray-200 hover:bg-gray-300 text-gray-800",
-    danger: "bg-red-600 hover:bg-red-700 text-white",
+    primary: "bg-primary hover:opacity-90 text-primary-foreground",
+    secondary: "bg-background hover:bg-border text-foreground",
+    danger: "bg-destructive hover:opacity-90 text-primary-foreground",
   };
 
   const sizeStyles = {

@@ -4,3 +4,7 @@ dist/
 *.local
 *.log
 .DS_Store
+# Ignore compiled artifacts in src (should not be committed)
+src/**/*.js
+src/**/*.js.map
+src/**/*.d.ts
